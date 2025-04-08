@@ -4,41 +4,41 @@
 #include <raylib.h>
 
 
-typedef struct list{
+typedef struct bullet{
 	Vector2 pos;
-	struct list* next;
-}list;
+	struct bullet* next;
+}bullet;
 
-list * create_list(Vector2 pos){
-	list * l = (list *) malloc(sizeof(list));
+bullet * create_bullet(Vector2 pos){
+	bullet * l = (bullet *) malloc(sizeof(bullet));
 	l-> pos  = pos;
 	l-> next = NULL;
 	return l;
 }
 
-void at_begining(list** head,Vector2 pos){
-	list * l = create_list(pos);
+void at_begining(bullet** head,Vector2 pos){
+	bullet * l = create_bullet(pos);
 	l->next = *head;
 	*head = l;
 }
-void del_head(list** head){
-	list *tmp = *head;
+void del_head(bullet** head){
+	bullet *tmp = *head;
 
 	*head = tmp->next;
 	free(tmp);
 }
 
 
-void at_end(list ** head ,Vector2  pos){
-	list * l = create_list(pos);
-	list * tmp = *head;
+void at_end(bullet ** head ,Vector2  pos){
+	bullet * l = create_bullet(pos);
+	bullet * tmp = *head;
 	while (tmp->next){
 		tmp = tmp->next;
 	}
 	tmp -> next = l;
 }
-void del_end(list** head){
-	list * tmp = *head;
+void del_end(bullet** head){
+	bullet * tmp = *head;
 	while (tmp->next->next){
 		tmp = tmp->next;
 	}
@@ -48,24 +48,24 @@ void del_end(list** head){
 }
 
 
-void print_list(list *head){
-	list * tmp = head;
+void print_bullet(bullet *head){
+	bullet * tmp = head;
 	while (tmp){
 		printf("x = %lf ,y = %lf > ",tmp -> pos.x,tmp->pos.y);
 		tmp = tmp->next;
 	}
 	printf("NULL \n");
 }
-void free_list(list *head){
-	list * tmp = head;
+void free_bullet(bullet *head){
+	bullet * tmp = head;
 	while (tmp) {
 		tmp = tmp->next;
 		free(tmp);
 		puts("free");
 	}
 }
-Vector2 get_posue(list *head,int reset){
-	static list * tmp  = NULL;
+Vector2 get_pos(bullet *head,int reset){
+	static bullet * tmp  = NULL;
 	if (reset || tmp == NULL){
 		tmp = head;
 	}else{
